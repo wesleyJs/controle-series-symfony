@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Series{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Listagem de series</h1>
+
+    <a href="/series/create" class="btn btn-dark mb-3">Adicionar</a>
+    <ul class="list-group">
+        {% for serie in series %}
+            <li class="list-group-item">{{ serie.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

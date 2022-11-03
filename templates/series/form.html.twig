@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nova Serie{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Nova serie</h1>
+
+    <form method="post">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome da Série:</label>
+        <input type="text" name="name" id="name" class="form-control"/>
+      </div>
+
+      <div class="text-end">
+        <a href="/series" class="btn btn-light border mt">Voltar</a>
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+      </div>
+    </form>
+    
+    
+</div>
+{% endblock %}
