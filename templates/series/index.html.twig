@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Series{% endblock %}
+{% block title %}Listagem de Séries{% endblock %}
 
 {% block body %}
 
 <div class="example-wrapper">
-    <h1>Listagem de series</h1>
-
     <a href="{{ path('app_series_form') }}" class="btn btn-dark mb-3">Adicionar</a>
     <ul class="list-group">
         {% for serie in series %}
@@ -14,7 +12,7 @@
                 {{ serie.name }}
 
                 <div class="d-flex">
-                    <a href="#" class="btn btn-sm btn-primary me-2">Editar</a>
+                    <a href="{{ path('app_edit_series_form', {series: serie.id}) }}" class="btn btn-sm btn-primary me-2">Editar</a>
                     <form method="post" action="{{ path('app_series_delete', {id: serie.id}) }}">
                         <input type="hidden" name="_method" value="DELETE"/>
                         <button href="#" class="btn btn-sm btn-danger">Apagar</button>

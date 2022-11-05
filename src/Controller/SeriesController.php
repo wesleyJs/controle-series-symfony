@@ -24,9 +24,9 @@ class SeriesController extends AbstractController
     public function index(Request $request): Response
     {
         $seriesList = $this->seriesRepository->findAll();
-        
-         return $this->render('series/index.html.twig', [
-            'series' => $seriesList
+
+        return $this->render('series/index.html.twig', [
+            'series' => $seriesList,
         ]);
     }
 
@@ -41,8 +41,26 @@ class SeriesController extends AbstractController
     {
         $seriesName = $request->get('name');
         $series = new Series($seriesName);
+
+        $this->addFlash('success', "Série $seriesName adicionada com sucesso!");
         
         $this->seriesRepository->save ($series, true);
+        return new RedirectResponse('/series');
+    }
+
+    #[Route('/series/edit/{series}', name: 'app_edit_series_form', methods: ['GET'])]
+    public function aditSeriesForm(Series $series): Response
+    {
+        return $this->render('series/form.html.twig', compact('series'));
+    }
+
+    #[Route("series/edit/{series}",  name: 'app_store_series_changes', methods: ['PATCH'])]
+    public function storeSeriesChanges(Request $request, Series $series)
+    {
+        $series->setName($request->request->get('name'));
+        $this->entityManager->flush();
+
+        $this->addFlash('success', "Série editada com sucesso!");
         return new RedirectResponse('/series');
     }
 
@@ -52,9 +70,10 @@ class SeriesController extends AbstractController
         methods: ['DELETE'],
         requirements: ['id' => '[0-9]+']
     )]
-    public function deleteSeries(int $id) 
+    public function deleteSeries(int $id, Request $request) 
     {
         $this->seriesRepository->removeById($id);
+        $this->addFlash('success', 'Série removida com sucesso');
 
         return new RedirectResponse('/series');
     }

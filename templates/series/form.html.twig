@@ -1,21 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nova Serie{% endblock %}
+{% block title %}{{ series is defined ? 'Editar' : 'Nova' }} Serie{% endblock %}
 
 {% block body %}
 
 <div class="example-wrapper">
-    <h1>Nova serie</h1>
-
-    <form method="post" action="{{ path('app_series_add') }}">
+    <form method="post" action="{{ series is defined ? path('app_store_series_changes', {series: series.id}) : path('app_series_add') }}">
       <div class="mb-3">
         <label for="name" class="form-label">Nome da Série:</label>
-        <input type="text" name="name" id="name" class="form-control"/>
+        <input type="text" 
+          name="name" 
+          id="name" 
+          class="form-control" 
+          value="{{ series is defined ? series.name : '' }}" />
       </div>
+
+      {% if series is defined %}
+        <input type="hidden" name="_method" value="PATCH" />
+      {% endif %}
 
       <div class="text-end">
         <a href="{{ path('app_series') }}" class="btn btn-light border mt">Voltar</a>
-        <button type="submit" class="btn btn-primary">Adicionar</button>
+        <button type="submit" class="btn btn-primary">
+          {{ series is defined ? 'Editar' : 'Adicionar' }}
+        </button>
       </div>
     </form>
     
