@@ -12,14 +12,17 @@
                 {{ serie.name }}
 
                 <div class="d-flex">
-                    <a href="{{ path('app_edit_series_form', {series: serie.id}) }}" class="btn btn-sm btn-primary me-2">Editar</a>
+                    <a href="{{ path('app_edit_series_form', {series: serie.id}) }}"
+                        class="btn btn-sm btn-primary me-2" >
+                        Editar
+                    </a>
+
                     <form method="post" action="{{ path('app_series_delete', {id: serie.id}) }}">
                         <input type="hidden" name="_method" value="DELETE"/>
                         <button href="#" class="btn btn-sm btn-danger">Apagar</button>
                     </form>
                 </div>
             </li>
-            
         {% endfor %}
     </ul>
 </div>
