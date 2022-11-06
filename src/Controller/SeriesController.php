@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\DTO\SeriesCreateFromInput;
+use App\Entity\Episode;
+use App\Entity\Season;
 use App\Entity\Series;
 use App\Form\SeriesType;
 use App\Repository\SeriesRepository;
@@ -33,24 +36,24 @@ class SeriesController extends AbstractController
     #[Route('/series/create', name: 'app_series_form',methods: ['GET'])]
     public function addSeriesForm()
     {
-        $seriesForm = $this->createForm( SeriesType::class, new Series());
-
+        $seriesForm = $this->createForm( SeriesType::class, new SeriesCreateFromInput());
         return $this->renderForm('series/form.html.twig', compact('seriesForm'));
     }
 
     #[Route("/series/create", name: 'app_series_add',methods: ['POST'])]
     public function addSeries(Request $request)
     {    
-        $series = new Series();
-        $seriesForm = $this->createForm( SeriesType::class, $series);
+        $input = new SeriesCreateFromInput();
+        $seriesForm = $this->createForm( SeriesType::class, $input);
         $seriesForm->handleRequest($request);
 
         if (!$seriesForm->isValid()) {
             return $this->renderForm('series/form.html.twig', compact('seriesForm'));
         }
 
-        $this->addFlash('success', "Série {$series->getName()} adicionada com sucesso!");
-        $this->seriesRepository->save($series, true);
+        $this->seriesRepository->add($input);
+
+        $this->addFlash('success', "Série {$input->seriesName} adicionada com sucesso!");
         
         return new RedirectResponse('/series');
     }
