@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20221107141556 extends AbstractMigration
+final class Version20221107200204 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20221107141556 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE episode ADD COLUMN watched DEFALT FALSE;');
+        $this->addSql('ALTER TABLE episode ADD COLUMN watched BOOLEAN DEFAULT FALSE;');
     }
 
     public function down(Schema $schema): void

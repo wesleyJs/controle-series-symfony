@@ -5,12 +5,16 @@
 {% block body %}
 
 <div class="example-wrapper">
+    {% if is_granted('ROLE_USER') %}
     <a href="{{ path('app_series_form') }}" class="btn btn-dark mb-3">Adicionar</a>
+    {% endif %}
+
     <ul class="list-group">
         {% for serie in series %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{{ path('app_seasons', {series: serie.id}) }}" >{{ serie.name }}</a>
-
+                
+                {% if is_granted('ROLE_USER') %}
                 <div class="d-flex">
                     <a href="{{ path('app_edit_series_form', {series: serie.id}) }}"
                         class="btn btn-sm btn-primary me-2" >
@@ -22,6 +26,7 @@
                         <button href="#" class="btn btn-sm btn-danger">Apagar</button>
                     </form>
                 </div>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
