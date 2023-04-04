@@ -3,13 +3,28 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
+    <style>
+         h1 {
+             display: none;
+         }
 
-<div>
+         div .form {
+             width: 400px;
+         }
+
+         .btn {
+             width: 100%;
+         }
+    </style>
+
+<div class="mt-5 pt-5 d-flex justify-content-center">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
+    <form action="{{ path('app_login') }}" method="post" class="form border p-4 shadow-sm bg-white rounded">
+        <h2 class="text-center">Bem Vindo</h2>
+
         <div class="mb-3">
             <label for="username" class="form-label">Email:</label>
             <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
@@ -22,7 +37,12 @@
 
         <input type="hidden" name="app_series" value="/series"/>
 
-        <button type="submit" class="btn btn-primary">login</button>
+        <button type="submit" class="btn btn-primary  my-3">login</button>
+
+        <div>
+            <span>Ainda não tem conta?</span>
+            <a href="/register">Clique aqui.</a>
+        </div>
     </form>
 </div>
 {% endblock %}
